@@ -7,7 +7,10 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+import matplotlib.pyplot as plt
 
+CLASSES = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+           'dog', 'frog', 'horse', 'ship', 'truck']
 
 # === CLASSES ===
 
@@ -69,6 +72,30 @@ def evaluate_model(model, test_loader):
     print(f"Accuracy: {100 * correct / total:.2f}%")
 
 
+def predict_and_show(model, test_loader, num_images=8):
+    model.eval()
+    images, labels = next(iter(test_loader))
+    
+    with torch.no_grad():
+        outputs = model(images)
+        _, predicted = torch.max(outputs, 1)
+    
+    fig, axes = plt.subplots(2, 4, figsize=(12, 6))
+    axes = axes.flatten()
+    
+    for i in range(num_images):
+        img = images[i].permute(1, 2, 0).numpy()
+        img = img * 0.5 + 0.5
+        axes[i].imshow(img)
+        axes[i].set_title(
+            f"Pred: {CLASSES[predicted[i]]}\nTrue: {CLASSES[labels[i]]}",
+            color="green" if predicted[i] == labels[i] else "red"
+        )
+        axes[i].axis("off")
+    
+    plt.tight_layout()
+    plt.show()
+
 # === MAIN ===
 
 if __name__ == "__main__":
@@ -78,3 +105,4 @@ if __name__ == "__main__":
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     train_model(model, train_loader, criterion, optimizer)
     evaluate_model(model, test_loader)
+    predict_and_show(model, test_loader)
