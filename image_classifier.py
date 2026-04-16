@@ -9,11 +9,14 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 
-CLASSES = ['airplane', 'automobile', 'bird', 'cat', 'deer',
-           'dog', 'frog', 'horse', 'ship', 'truck']
 
 # === CLASSES ===
 
+CLASSES = ['airplane', 'automobile', 'bird', 'cat', 'deer',
+           'dog', 'frog', 'horse', 'ship', 'truck']
+
+
+# === MODEL ===
 
 class CNN(nn.Module):
     def __init__(self):
@@ -95,6 +98,7 @@ def predict_and_show(model, test_loader, num_images=8):
     
     plt.tight_layout()
     plt.show()
+
 
 # === MAIN ===
 
