@@ -9,14 +9,9 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import matplotlib.pyplot as plt
 
-
-# === CLASSES ===
-
 CLASSES = ['airplane', 'automobile', 'bird', 'cat', 'deer',
            'dog', 'frog', 'horse', 'ship', 'truck']
 
-
-# === MODEL ===
 
 class CNN(nn.Module):
     def __init__(self):
@@ -36,8 +31,6 @@ class CNN(nn.Module):
         x = self.fc2(x)
         return x
 
-
-# === FUNCTIONS ===
 
 def load_data():
     transform = transforms.Compose([
@@ -99,8 +92,6 @@ def predict_and_show(model, test_loader, num_images=8):
     plt.tight_layout()
     plt.show()
 
-
-# === MAIN ===
 
 if __name__ == "__main__":
     train_loader, test_loader = load_data()
